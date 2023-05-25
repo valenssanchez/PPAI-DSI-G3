@@ -21,4 +21,5 @@ class RespuestaDeCliente:
     def getDescripcionRta(self):
         return self.respuestaSeleccionada.getDescripcionRta()
 
-
+    def getDescPreguntaAsociada(self):
+        return self.respuestaSeleccionada.getDescPreguntaAsociada()

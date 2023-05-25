@@ -1,15 +1,13 @@
-from CambioDeEstado import *
-
 
 class Llamada:
-    def __init__(self, cliente):
+    def __init__(self, cambioDeEstado, cliente):
         self.cliente = cliente
         self.descripcionOperador = ""
         self.detalleAccionRequerida = ""
         self.duracion = 0
         self.encuestaEnviada = None
         self.observacionAuditor = ""
-        self.cambioDeEstado = []
+        self.cambioDeEstado = [cambioDeEstado]
         self.respuestaDeCliente = []
 
     def getDescripcionOperador(self):
@@ -55,12 +53,7 @@ class Llamada:
         self.respuestaDeCliente.append(valor)
 
     def esDePeriodo(self, fechaInicio, fechaFin):
-        cambioDeEstadoInicial = None
-        for cambio in self.cambioDeEstado:
-            if self.cambioDeEstado[cambio].esEstadoInicial():
-                cambioDeEstadoInicial = self.cambioDeEstado[cambio]
-                break
-        fechaLlamada = cambioDeEstadoInicial.getFechaHoraInicio()
+        fechaLlamada = self.obtenerFechaInicio()
         return fechaInicio <= fechaLlamada <= fechaFin
 
     def tieneRespuestas(self):
@@ -71,13 +64,38 @@ class Llamada:
 
     def obtenerEstadoActual(self):
         cambioEstadoActual = None
-        for cambio in self.cambioDeEstado:
-            if self.cambioDeEstado[cambio].esUltimoEstado():
-                cambioEstadoActual = self.cambioDeEstado[cambio]
-                break
+        ultimaFecha = None
+        for cambioEstado in self.cambioDeEstado:
+            fecha = cambioEstado.getFechaHoraInicio()
+            if ultimaFecha is None:
+                cambioEstadoActual = cambioEstado
+                ultimaFecha = fecha
+            else:
+                if fecha > ultimaFecha:
+                    cambioEstadoActual = cambioEstado
+                    ultimaFecha = fecha
         return cambioEstadoActual.getNombreEstado()
 
-    def obtenerDescripcionDeRespuestas(self):
-        pass
+    def obtenerDescripcionDeRespuestasYPreguntas(self):
+        respuestas = []
+        preguntas = []
+
+        for respuesta in self.respuestaDeCliente:
+            respuestas.append(respuesta.getDescripcionRta())
+            preguntas.append(respuesta.getDescPreguntaAsociada())
+
+        return respuestas, preguntas
+
+    def obtenerFechaInicio(self):
+        fechaInicio = None
+        for cambioEstado in self.cambioDeEstado:
+            fecha = cambioEstado.getFechaHoraInicio()
+            if fechaInicio is None:
+                fechaInicio = fecha
+            else:
+                if fecha < fechaInicio:
+                    fechaInicio = fecha
+
+        return fechaInicio
 
 

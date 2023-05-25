@@ -1,7 +1,8 @@
+from datetime import datetime
 
 class CambioDeEstado:
-    def __init__(self, fechaHoraInicio, estado):
-        self.fechaHoraInicio = fechaHoraInicio
+    def __init__(self, estado):
+        self.fechaHoraInicio = datetime.now()
         self.estado = estado
 
     def getFechaHoraInicio(self):
@@ -15,9 +16,6 @@ class CambioDeEstado:
 
     def setEstado(self, valor):
         self.estado = valor
-
-    def esEstadoInicial(self):
-        return self.estado.esIniciada()
 
     def getNombreEstado(self):
         return self.estado.getNombre()

@@ -11,3 +11,6 @@ class Estado:
 
     def esIniciada(self):
         return self.nombre == "Iniciada"
+
+    def esFinalizada(self):
+         return self.nombre == "Finalizada"

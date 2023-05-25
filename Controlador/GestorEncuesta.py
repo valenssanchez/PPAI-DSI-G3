@@ -33,7 +33,7 @@ class GestorEncuesta():
     def validarFechas(self, fechaInicio, fechaFin):
         return fechaInicio <= fechaFin
 
-    def tomarFechaDelPeriodo(self, fechaInicio, fechaFin):
+    def tomarFechasDelPeriodo(self, fechaInicio, fechaFin):
         if self.validarFechas(fechaInicio, fechaFin):
             self.setFechaInicio(fechaInicio)
             self.setFechaFin(fechaFin)
@@ -41,8 +41,8 @@ class GestorEncuesta():
     def filtrarLlamadas(self, llamadas):
         llamadasFiltradas = []
         for llamada in llamadas:
-            if (llamadas[llamada].esDePeriodo(self.fechaInicio, self.fechaFin)) and llamadas[llamada].tieneRespuestas():
-                llamadasFiltradas.append(llamadas[llamada])
+            if (llamada.esDePeriodo(self.fechaInicio, self.fechaFin)) and llamada.tieneRespuestas():
+                llamadasFiltradas.append(llamada)
 
         if len(llamadasFiltradas) > 0:
             return llamadasFiltradas
@@ -51,5 +51,27 @@ class GestorEncuesta():
 
     def tomarSeleccionDeLlamada(self, llamadaSelec):
         self.setLlamadaSeleccionada(llamadaSelec)
+
+    def nuevaConsulta(self):
+        pass
+
+    def buscarEncuestaLlamada(self, preguntas, encuestas):
+        for encuesta in encuestas:
+            if encuesta.esEncuestaConPreguntas(preguntas):
+                encuestaLlamada = encuesta
+                return encuestaLlamada
+
+        return None
+
+    def buscarDatosDeLlamadaSeleccionada(self, llamada, encuestas):
+        nombreCliente = llamada.getNombreClienteDeLlamada()
+        estadoActual = llamada.obtenerEstadoActual()
+        duracion = llamada.getDuracion()
+        respuestas, preguntas = llamada.obtenerDescripcionDeRespuestasYPreguntas()
+        encuesta = self.buscarEncuestaLlamada(preguntas, encuestas)
+        descripcionEncuesta = encuesta.getDescripcion()
+
+        return nombreCliente, estadoActual, duracion, respuestas, preguntas, descripcionEncuesta
+
 
 

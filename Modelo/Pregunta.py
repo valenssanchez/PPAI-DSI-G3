@@ -1,9 +1,9 @@
 class Pregunta:
     def __init__(self, pregunta, respuesta):
         self.pregunta = pregunta
-        self.respuesta = []
+        self.respuesta = respuesta
 
-    def getPregunta(self):
+    def getDescripcion(self):
         return self.pregunta
 
     def setPregunta(self, valor):

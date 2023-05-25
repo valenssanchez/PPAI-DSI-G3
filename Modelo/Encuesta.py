@@ -2,7 +2,7 @@ class Encuesta:
     def __init__(self, descripcion, fechaFinVigencia, pregunta):
         self.descripcion = descripcion
         self.fechaFinVigencia = fechaFinVigencia
-        self.pregunta = []
+        self.pregunta = pregunta
 
     def getDescripcion(self):
         return self.descripcion
@@ -21,3 +21,13 @@ class Encuesta:
 
     def setPregunta(self, valor):
         self.pregunta.append(valor)
+
+    def esEncuestaConPreguntas(self, preguntas):
+        for preg in self.pregunta:
+            descripcion = preg.getDescripcion()
+
+            if descripcion not in preguntas:
+                return False
+
+        return True
+

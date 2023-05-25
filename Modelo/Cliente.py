@@ -1,3 +1,5 @@
+
+
 class Cliente:
     def __init__(self, dni, nombreCompleto, nroCelular):
         self.dni = dni
@@ -21,4 +23,6 @@ class Cliente:
 
     def setNroCelular(self, valor):
         self.nroCelular = valor
+
+
 

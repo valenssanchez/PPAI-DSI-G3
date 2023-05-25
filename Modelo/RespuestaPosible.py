@@ -1,13 +1,14 @@
 
-class RespuestasPosibles:
+class RespuestaPosible:
     def __init__(self, descripcion, valor):
         self.descripcion = descripcion
         self.valor = valor
+        self.preguntaAsociada = None
 
-    def getDescripcion(self):
+    def getDescripcionRta(self):
         return self.descripcion
 
-    def setDescripcion(self, valor):
+    def setDescripcionRta(self, valor):
         self.descripcion = valor
 
     def getValor(self):
@@ -15,3 +16,12 @@ class RespuestasPosibles:
 
     def setValor(self, valor):
         self.valor = valor
+
+    def setPreguntaAsociada(self, valor):
+        self.preguntaAsociada = valor
+
+    def getPreguntaAsociada(self):
+        return self.preguntaAsociada
+
+    def getDescPreguntaAsociada(self):
+        return self.preguntaAsociada.getDescripcion()
